@@ -121,10 +121,10 @@ double const ScalePhotoWidth = 1000;
         self.collectionView.collectionViewLayout = layout;
         self.collectionView.backgroundColor = [UIColor whiteColor];
         [self.collectionView registerClass:NSClassFromString(@"ZLCollectionCell") forCellWithReuseIdentifier:@"ZLCollectionCell"];
-        if (![ZLPhotoManager havePhotoLibraryAuthority]) {
-            //注册实施监听相册变化
-            [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
-        }
+//        if (![ZLPhotoManager havePhotoLibraryAuthority]) {
+//            //注册实施监听相册变化
+//            [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
+//        }
     }
     return self;
 }
