@@ -391,6 +391,20 @@
 //    NSLog(@"---- %s", __FUNCTION__);
 }
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.allowTakePhoto = YES;
+        self.allowRecordVideo = YES;
+        self.maxRecordDuration = 15;
+        self.sessionPreset = ZLCaptureSessionPreset1280x720;
+        self.videoType = ZLExportVideoTypeMp4;
+        self.circleProgressColor = kRGB(80, 180, 234);
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -421,11 +435,34 @@
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [UIApplication sharedApplication].statusBarHidden = YES;
+    [self.session startRunning];
+    [self setFocusCursorWithPoint:self.view.center];
+    if (!self.allowTakePhoto && !self.allowRecordVideo) {
+        ShowAlert(@"allowTakePhoto与allowRecordVideo不能同时为NO", self);
+    }
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    
+    [UIApplication sharedApplication].statusBarHidden = NO;
     [self.motionManager stopDeviceMotionUpdates];
     self.motionManager = nil;
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    if (self.session) {
+        [self.session stopRunning];
+    }
 }
 
 #pragma mark - 监控设备方向
@@ -467,26 +504,6 @@
             // UIDeviceOrientationLandscapeLeft;
             self.orientation = AVCaptureVideoOrientationLandscapeRight;
         }
-    }
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [UIApplication sharedApplication].statusBarHidden = YES;
-    [self.session startRunning];
-    [self setFocusCursorWithPoint:self.view.center];
-    if (!self.allowTakePhoto && !self.allowRecordVideo) {
-        ShowAlert(@"allowTakePhoto与allowRecordVideo不能同时为NO", self);
-    }
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    [UIApplication sharedApplication].statusBarHidden = NO;
-    if (self.session) {
-        [self.session stopRunning];
     }
 }
 

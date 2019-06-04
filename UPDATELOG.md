@@ -2,7 +2,31 @@
 
 -----
 
-## [3.0.1](https://github.com/longitachi/ZLPhotoBrowser/releases/tag/3.0.1) (2019-02-20)
+## [3.0.4](https://github.com/longitachi/ZLPhotoBrowser/releases/tag/3.0.4) (2019-05-19)
+
+#### Add
+* 添加视频选择最大最小个数限制;.
+
+### Fix
+* 解决网络gif图片无法播放的bug.[#372](https://github.com/longitachi/ZLPhotoBrowser/pull/372)
+* fix已知bug.[#371](https://github.com/longitachi/ZLPhotoBrowser/issues/371)
+
+---
+
+
+## [3.0.3](https://github.com/longitachi/ZLPhotoBrowser/releases/tag/3.0.3) (2019-05-09)
+
+#### Add
+* 依赖库SDWebImage升级为5.0.2以上; 
+* 支持直接调用相机;
+
+### Fix
+* 解决图片浏览器关闭时取消所有sd图片请求的bug.[#366](https://github.com/longitachi/ZLPhotoBrowser/issues/366)
+
+---
+
+
+## [3.0.1](https://github.com/longitachi/ZLPhotoBrowser/releases/tag/3.0.1) (2019-04-08)
 
 #### Add
 * 压缩bundle内图片;

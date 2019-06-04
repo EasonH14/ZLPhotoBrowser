@@ -14,25 +14,6 @@
 
 @implementation ZLImageNavigationController
 
-static NSHashTable *_sd_operations = nil;
-
-+ (NSHashTable<id<SDWebImageOperation>> *)sd_operations
-{
-    if (!_sd_operations) {
-        _sd_operations = [NSHashTable hashTableWithOptions:NSPointerFunctionsWeakMemory];
-    }
-    return _sd_operations;
-}
-
-- (void)dealloc
-{
-    for (id<SDWebImageOperation> op in ZLImageNavigationController.sd_operations.allObjects) {
-        [op cancel];
-    }
-    [ZLImageNavigationController.sd_operations removeAllObjects];
-//    NSLog(@"---- %s", __FUNCTION__);
-}
-
 - (instancetype)initWithRootViewController:(UIViewController *)rootViewController
 {
     self = [super initWithRootViewController:rootViewController];
@@ -162,12 +143,12 @@ static NSHashTable *_sd_operations = nil;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         ZLPhotoConfiguration *configuration = [(ZLImageNavigationController *)self.navigationController configuration];
-        zl_weakify(self);
+        @zl_weakify(self);
         [ZLPhotoManager getPhotoAblumList:configuration.allowSelectVideo allowSelectImage:configuration.allowSelectImage complete:^(NSArray<ZLAlbumListModel *> *albums) {
-            zl_strongify(weakSelf);
-            strongSelf.arrayDataSources = [NSMutableArray arrayWithArray:albums];
+            @zl_strongify(self);
+            self.arrayDataSources = [NSMutableArray arrayWithArray:albums];
             dispatch_async(dispatch_get_main_queue(), ^{
-                [strongSelf.tableView reloadData];
+                [self.tableView reloadData];
             });
         }];
     });
